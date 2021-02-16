@@ -5,5 +5,13 @@
     <services>
         <prototype namespace="App\" resource="../src/*" autowire="true" autoconfigure="true" public="true"/>
         <defaults autowire="true" autoconfigure="true" public="true" />
+
+        <instanceof id="App\handlers\HandlerInterface" autowire="true">
+            <tag name="service.handlers"/>
+        </instanceof>
+
+        <service id="App\StrategyPattern">
+            <argument type="tagged_iterator" tag="service.handlers"/>
+        </service>
     </services>
 </container>
