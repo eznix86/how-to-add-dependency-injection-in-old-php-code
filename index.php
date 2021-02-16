@@ -4,6 +4,4 @@ use App\Service;
 
 require_once 'vendor/autoload.php';
 
-
-$container = new \Config\Container();
-$container->get(Service::class)->displayStuff();
+\Config\Container::get(Service::class)->displayStuff();
