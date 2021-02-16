@@ -14,9 +14,11 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 class Container
 {
 
+    protected static $instance = null;
+
     private $containerBuilder;
 
-    public function __construct()
+    protected function __construct()
     {
         $this->containerBuilder = new ContainerBuilder();
         $loader = new XmlFileLoader($this->containerBuilder, new FileLocator(__DIR__));
@@ -32,9 +34,12 @@ class Container
      * @throws ServiceNotFoundException          When the service is not defined
      * @throws \Exception
      */
-    public function get($id)
+    public static function get($id)
     {
-        return $this->containerBuilder->get($id);
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance->containerBuilder->get($id);
     }
 
 }
